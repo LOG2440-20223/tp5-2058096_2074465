@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, Db } = require("mongodb");
 const DB_CONSTS = require("../utils/env");
 
 class DatabaseService {
@@ -7,7 +7,15 @@ class DatabaseService {
    * @param {string} collectionName nom de la collection sur MongoDB
    * @param {Array} data tableau contenant les documents à mettre dans la collection
    */
-  async populateDb (collectionName, data) {}
+  async populateDb (collectionName, data) {
+    //let db = Db.getDB('PolyPlay');
+    let collectionTest = Db.getCollectionNames().toList().contains(collectionName); 
+    if(collectionTest === false) {
+      Db.createCollection(collectionName);
+      Db.collectionName.insert(data);
+    }
+
+  }
 
   // Méthode pour établir la connection entre le serveur Express et la base de données MongoDB
   async connectToServer (uri) {
