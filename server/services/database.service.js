@@ -8,13 +8,13 @@ class DatabaseService {
    * @param {Array} data tableau contenant les documents à mettre dans la collection
    */
   async populateDb (collectionName, data) {
-    //let db = Db.getDB('PolyPlay');
-    let collectionTest = Db.getCollectionNames().toList().contains(collectionName); 
-    if(collectionTest === false) {
-      Db.createCollection(collectionName);
-      Db.collectionName.insert(data);
+    const collection = this.db.collection(collectionName)
+    const arrayCollection = await collection.find({}).toArray()
+    if( arrayCollection.length === 0) {
+      for(let element of data) {
+        await collection.insertOne(element);
+      }
     }
-
   }
 
   // Méthode pour établir la connection entre le serveur Express et la base de données MongoDB
