@@ -135,9 +135,16 @@ class PlaylistService {
    * @returns toutes les playlists qui ont le mot clé cherché dans leur contenu (name, description)
    */
   async search (substring, exact) {
-    const filter = { name: { $regex: `${substring}`, $options: "i" } };
-    const playlists = await this.collection.find(filter).toArray();
-    return playlists;
+    const filterSensitive = { $or: [ { name: { $regex: `${substring}` } }, { description: { $regex: `${substring}` } }  ] };
+    const filterNotSentitive = { $or: [ { name: { $regex: `${substring}`, $options: "i" } }, { description: { $regex: `${substring}`, $options: "i" } }  ] };
+    if(exact === true) {
+      const playlist = await this.collection.find(filterSensitive).toArray();
+      return playlist;
+    }
+    else{
+      const playlists = await this.collection.find(filterNotSentitive).toArray();
+      return playlists
+    }
   }
 
   async populateDb () {
