@@ -22,7 +22,8 @@ class PlaylistService {
    * @returns {Promise<Array>} la liste de toutes les playlists
    */
   async getAllPlaylists () {
-    return [];
+    let playlistArray = await this.collection.find({}).toArray();
+    return playlistArray;
   }
 
   /**
@@ -32,7 +33,9 @@ class PlaylistService {
    * @returns Retourne la playlist en fonction de son id
    */
   async getPlaylistById (id) {
-    return { id: -1 };
+    const filter = {id: id}
+    let playlist = this.collection.findOne(filter);
+    return playlist;
   }
 
   /**
@@ -44,6 +47,7 @@ class PlaylistService {
   async addPlaylist (playlist) {
     playlist.id = randomUUID();
     await this.savePlaylistThumbnail(playlist);
+    await this.collection.insertOne(playlist);
     return playlist;
   }
 
@@ -54,7 +58,16 @@ class PlaylistService {
    */
   async updatePlaylist (playlist) {
     delete playlist._id; // _id est immutable
+    let filter = {id: playlist.id}
     await this.savePlaylistThumbnail(playlist);
+    await this.collection.updateOne(filter,
+     { $set: {
+      name: playlist.name,
+      description: playlist.description,
+      thumbnail: playlist.thumbnail,
+      songs: playlist.songs
+     }} )
+
   }
 
   /**
