@@ -34,7 +34,7 @@ class PlaylistService {
    */
   async getPlaylistById (id) {
     const filter = {id: id}
-    let playlist = this.collection.findOne(filter);
+    let playlist = await this.collection.findOne(filter);
     return playlist;
   }
 
@@ -138,8 +138,8 @@ class PlaylistService {
     const filterSensitive = { $or: [ { name: { $regex: `${substring}` } }, { description: { $regex: `${substring}` } }  ] };
     const filterNotSentitive = { $or: [ { name: { $regex: `${substring}`, $options: "i" } }, { description: { $regex: `${substring}`, $options: "i" } }  ] };
     if(exact === true) {
-      const playlist = await this.collection.find(filterSensitive).toArray();
-      return playlist;
+      const playlists = await this.collection.find(filterSensitive).toArray();
+      return playlists;
     }
     else{
       const playlists = await this.collection.find(filterNotSentitive).toArray();
