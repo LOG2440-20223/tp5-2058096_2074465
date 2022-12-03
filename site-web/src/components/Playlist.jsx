@@ -12,7 +12,7 @@ export default function Playlist({ playlist }) {
       </div>
       {/* Ajouter les informations de la playlist */}
       <p>{playlist.name}</p>
-      <p>{playlist.descrition}</p>
+      <p>{playlist.description}</p>
     </NavLink>
   );
 }
