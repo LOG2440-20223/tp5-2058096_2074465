@@ -6,25 +6,22 @@ import PlaylistContext from "../contexts/PlaylistContext";
 export default function Song({ song, index }) {
   const { dispatch } = useContext(PlaylistContext);
   const [liked, setLiked] = useState(song.liked);
-  // TODO : envoyer une demande de modification au serveur et mettre l'interface à jour.
+  // envoyer une demande de modification au serveur et mettre l'interface à jour.
   const api = useContext(PlaylistContext).api;
- 
   const toggleLike = () => { 
     setLiked(liked ? false : true);
     api.updateSong(song.id);
   };
-  
-  
 
-  // TODO : envoyer une action PLAY avec le bon index au reducer.
-  const playSong = () => {};
-  //console.log(toggleLike());
+  // envoyer une action PLAY avec le bon index au reducer.
+  const playSong = () => {dispatch({type : ACTIONS.PLAY, payload : {index}}); console.log('hello')};
   return (
     <section
       className="song-item flex-row"
       onClick={() => {
-        {/*TODO : joueur une chanson seulement si index existe */}
-        playSong();
+        if(index != undefined) {
+          playSong()
+        }
       }}
     >
       {index ? <span>{index}</span> : <></>}
@@ -33,11 +30,10 @@ export default function Song({ song, index }) {
       <p>{song.genre}</p>
       <p>{song.artist}</p>
   
-
-      {/*TODO : modifier le statut aimé seulement si index n'existe pas */}
+      {/*modifier le statut aimé seulement si index n'existe pas */}
       <button
         className={`${liked ? "fa" : "fa-regular"} fa-2x fa-heart`}
-        onClick={toggleLike}
+        onClick={index ? () => {} : toggleLike}
       ></button>
     </section>
   );
