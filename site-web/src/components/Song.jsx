@@ -8,9 +8,10 @@ export default function Song({ song, index }) {
   const [liked, setLiked] = useState(song.liked);
   // TODO : envoyer une demande de modification au serveur et mettre l'interface à jour.
   const api = useContext(PlaylistContext).api;
+ 
   const toggleLike = () => { 
     setLiked(liked ? false : true);
-    updateSong(song.id);
+    api.updateSong(song.id);
   };
   
   
