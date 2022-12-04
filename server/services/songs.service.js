@@ -16,51 +16,51 @@ class SongService {
   }
 
   /**
-   * TODO : Implémenter la récupération de toutes les chansons
+   * Implémenter la récupération de toutes les chansons
    *
    * Retourne la liste de toutes les chansons
    * @returns {Promise<Array>}
    */
   async getAllSongs () {
-    let songArray = await this.collection.find({}).toArray();
+    const songArray = await this.collection.find({}).toArray();
     return songArray;
   }
 
   /**
-   * TODO : Implémenter la récupération d'une chanson en fonction de son id
+   * Implémenter la récupération d'une chanson en fonction de son id
    *
    * Retourne une chanson en fonction de son id
    * @param {number} id identifiant de la chanson
    * @returns chanson correspondant à l'id
    */
   async getSongById (id) {
-    const filter = {id: id}
-    let song = await this.collection.findOne(filter);
+    const filter = { id }
+    const song = await this.collection.findOne(filter);
     return song;
   }
 
   /**
-   * TODO : Implémenter l'inversement de l'état aimé d'une chanson
+   * Implémenter l'inversement de l'état aimé d'une chanson
    *
    * Modifie l'état aimé d'une chanson par l'état inverse
    * @param {number} id identifiant de la chanson
    * @returns {boolean} le nouveau état aimé de la chanson
    */
   async updateSongLike (id) {
-    const filter = {id: id};
-    let song = await this.collection.findOne(filter);
-    if(song.liked === true){
-        await this.collection.updateOne(filter, { $set: { liked: false } } ) 
-        return false
-      }
-    if(song.liked === false){ 
-        await this.collection.updateOne(filter, { $set: { liked: true } } );
-        return true;
-      }
+    const filter = { id };
+    const song = await this.collection.findOne(filter);
+    if (song.liked === true) {
+      await this.collection.updateOne(filter, { $set: { liked: false } })
+      return false
+    }
+    if (song.liked === false) {
+      await this.collection.updateOne(filter, { $set: { liked: true } });
+      return true;
+    }
   }
 
   /**
-   * TODO : Implémenter la recherche pour les 3 champs des chansons. Astuce : utilisez l'opérateur '$or' de MongoDB
+   * Implémenter la recherche pour les 3 champs des chansons. Astuce : utilisez l'opérateur '$or' de MongoDB
    *
    * Cherche et retourne les chansons qui ont un mot clé spécifique dans leur description (name, artist, genre)
    * Si le paramètre 'exact' est TRUE, la recherche est sensible à la case
@@ -70,13 +70,12 @@ class SongService {
    * @returns toutes les chansons qui ont le mot clé cherché dans leur contenu (name, artist, genre)
    */
   async search (substring, exact) {
-    const filterSensitive = { $or: [ { name: { $regex: `${substring}` } }, { artist: { $regex: `${substring}` } },{ genre: { $regex: `${substring}` } }  ] };
-    const filterNotSentitive = { $or: [ { name: { $regex: `${substring}`, $options: "i" } }, { artist: { $regex: `${substring}`, $options: "i" } },{ genre: { $regex: `${substring}`, $options: "i" } }  ] };
-    if(exact === true) {
+    const filterSensitive = { $or: [{ name: { $regex: `${substring}` } }, { artist: { $regex: `${substring}` } }, { genre: { $regex: `${substring}` } }] };
+    const filterNotSentitive = { $or: [{ name: { $regex: `${substring}`, $options: "i" } }, { artist: { $regex: `${substring}`, $options: "i" } }, { genre: { $regex: `${substring}`, $options: "i" } }] };
+    if (exact === true) {
       const songs = await this.collection.find(filterSensitive).toArray();
       return songs;
-    }
-    else{
+    } else {
       const songs = await this.collection.find(filterNotSentitive).toArray();
       return songs;
     }

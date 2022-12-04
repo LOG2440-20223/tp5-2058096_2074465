@@ -22,7 +22,7 @@ class PlaylistService {
    * @returns {Promise<Array>} la liste de toutes les playlists
    */
   async getAllPlaylists () {
-    let playlistArray = await this.collection.find({}).toArray();
+    const playlistArray = await this.collection.find({}).toArray();
     return playlistArray;
   }
 
@@ -33,8 +33,8 @@ class PlaylistService {
    * @returns Retourne la playlist en fonction de son id
    */
   async getPlaylistById (id) {
-    const filter = {id: id}
-    let playlist = await this.collection.findOne(filter);
+    const filter = { id }
+    const playlist = await this.collection.findOne(filter);
     return playlist;
   }
 
@@ -58,16 +58,17 @@ class PlaylistService {
    */
   async updatePlaylist (playlist) {
     delete playlist._id; // _id est immutable
-    let filter = {id: playlist.id}
+    const filter = { id: playlist.id }
     await this.savePlaylistThumbnail(playlist);
     await this.collection.updateOne(filter,
-     { $set: {
-      name: playlist.name,
-      description: playlist.description,
-      thumbnail: playlist.thumbnail,
-      songs: playlist.songs
-     }} )
-
+      {
+        $set: {
+          name: playlist.name,
+          description: playlist.description,
+          thumbnail: playlist.thumbnail,
+          songs: playlist.songs
+        }
+      })
   }
 
   /**
@@ -135,13 +136,12 @@ class PlaylistService {
    * @returns toutes les playlists qui ont le mot clé cherché dans leur contenu (name, description)
    */
   async search (substring, exact) {
-    const filterSensitive = { $or: [ { name: { $regex: `${substring}` } }, { description: { $regex: `${substring}` } }  ] };
-    const filterNotSentitive = { $or: [ { name: { $regex: `${substring}`, $options: "i" } }, { description: { $regex: `${substring}`, $options: "i" } }  ] };
-    if(exact === true) {
+    const filterSensitive = { $or: [{ name: { $regex: `${substring}` } }, { description: { $regex: `${substring}` } }] };
+    const filterNotSentitive = { $or: [{ name: { $regex: `${substring}`, $options: "i" } }, { description: { $regex: `${substring}`, $options: "i" } }] };
+    if (exact === true) {
       const playlists = await this.collection.find(filterSensitive).toArray();
       return playlists;
-    }
-    else{
+    } else {
       const playlists = await this.collection.find(filterNotSentitive).toArray();
       return playlists
     }

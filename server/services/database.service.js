@@ -1,4 +1,4 @@
-const { MongoClient, Db } = require("mongodb");
+const { MongoClient } = require("mongodb");
 const DB_CONSTS = require("../utils/env");
 
 class DatabaseService {
@@ -10,8 +10,8 @@ class DatabaseService {
   async populateDb (collectionName, data) {
     const collection = this.db.collection(collectionName)
     const arrayCollection = await collection.find({}).toArray()
-    if( arrayCollection.length === 0) {
-      for(let element of data) {
+    if (arrayCollection.length === 0) {
+      for (const element of data) {
         await collection.insertOne(element);
       }
     }
