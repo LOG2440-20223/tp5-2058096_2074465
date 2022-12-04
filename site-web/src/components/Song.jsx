@@ -7,16 +7,17 @@ export default function Song({ song, index }) {
   const { dispatch } = useContext(PlaylistContext);
   const [liked, setLiked] = useState(song.liked);
   // TODO : envoyer une demande de modification au serveur et mettre l'interface à jour.
-  let api = useContext(PlaylistContext).api;
+  const api = useContext(PlaylistContext).api;
   const toggleLike = () => { 
     setLiked(liked ? false : true);
-    api.updateSong(song.id);
+    updateSong(song.id);
   };
   
   
 
   // TODO : envoyer une action PLAY avec le bon index au reducer.
   const playSong = () => {};
+  //console.log(toggleLike());
   return (
     <section
       className="song-item flex-row"
