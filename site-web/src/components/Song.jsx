@@ -14,7 +14,7 @@ export default function Song({ song, index }) {
   };
 
   // envoyer une action PLAY avec le bon index au reducer.
-  const playSong = () => {dispatch({type : ACTIONS.PLAY, payload : {index}}); console.log('hello')};
+  const playSong = () => {dispatch({type : ACTIONS.PLAY, payload : {index : index-1}})};
   return (
     <section
       className="song-item flex-row"
