@@ -46,9 +46,20 @@ Les fichiers des chansons initiales sont disponibles dans le répertoire `assets
 
 | **Exigences**                                 | **Note** | **Points** |
 | --------------------------------------------- | :------: | :--------: |
-| Implémentation des services du serveur        |    0     |     6      |
-| Implémentation des composantes de pages React |    0     |     5      |
-| Implémentation des autres composantes React   |    0     |     5      |
-| Structure du code                             |    0     |     2      |
-| Qualité et clarté du code                     |    0     |     2      |
-| **Total**                                     |  **0**   |   **20**   |
+| Implémentation des services du serveur        |    6     |     6      |
+| Implémentation des composantes de pages React |    5     |     5      |
+| Implémentation des autres composantes React   |    5     |     5      |
+| Structure du code                             |    2     |     2      |
+| Qualité et clarté du code                     |    2     |     2      |
+| **Total**                                     |  **20**  |   **20**   |
+
+- Implémentation des services du serveur
+  - tres bien
+- Implémentation des composantes de pages React
+  - tres bien
+- Implémentation des autres composantes React
+  - tres bien
+- Structure du code
+  - tres bien
+- Qualité et clarté du code
+  - tres bien
