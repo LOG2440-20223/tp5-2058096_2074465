@@ -10,8 +10,8 @@ export default function Footer() {
       return (
         <div>
           <p>
-            Choisir une playlist à travers la
-            <NavLink to="/index">Bibliothèque</NavLink> pour la faire jouer
+            Choisir une playlist à travers la 
+            <NavLink to="/index"> Bibliothèque</NavLink> pour la faire jouer
           </p>
         </div>
       );
@@ -21,8 +21,8 @@ export default function Footer() {
     <footer id="playing-bar">
       {loadPlayer(useLocation().pathname)}
       <div id="creators">
-        <p>étudiant.e 1 matricule</p>
-        <p>étudiant.e 2 matricule</p>
+        <p>Clémentine Chailleux 2058096</p>
+        <p>Loris Pondérant 2074465</p>
       </div>
     </footer>
   );
